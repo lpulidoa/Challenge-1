@@ -1,2 +1,2 @@
 for i in range(5):
-    print("ayuda")
+    print(i+1)
