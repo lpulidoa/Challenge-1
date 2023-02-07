@@ -1,9 +1,9 @@
 import numpy as np
 
-file = 'DanceFloor02.txt'
+danceFloor = 'DanceFloor02.txt'
 
-A=np.loadtxt(file, skiprows=1, dtype=int)
-A.astype(int)
+overView=np.loadtxt(danceFloor, skiprows=1, dtype=int)
+overView.astype(int)
 n=len(A)
 caminos=np.zeros((n,n))
 
