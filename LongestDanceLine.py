@@ -7,6 +7,7 @@ A.astype(int)
 n=len(A)
 caminos=np.zeros((n,n))
 
+# Volver función de calcular caminos
 m=0
 for i in range(n):
 	
@@ -32,7 +33,7 @@ print(m)
 x=np.where(caminos==m)
 print(x)
 
-
+# volver función de reconstruir caminos 
 i1=x[0][0]
 i2=x[1][0]
 m=int(m)
@@ -40,10 +41,8 @@ rec=np.zeros((m,2))
 rec[0][0]=i1
 rec[0][1]=i2
 for i in range(m-1):
-	#print(caminos[i1][i2])
-	#print(caminos[i1][i2-1])
 	if(i2!=0):
-		if(np.absolute(int(A[i1][i2])-int(A[i1][i2-1]))==1 and int(caminos[i1][i2])-int(caminos[i1][i2-1])==1): #if(int(caminos[i1][i2])-int(caminos[i1][i2-1])==1):
+		if(np.absolute(int(A[i1][i2])-int(A[i1][i2-1]))==1 and int(caminos[i1][i2])-int(caminos[i1][i2-1])==1): 
 			i2=i2-1
 		else:
 			i1=i1-1
@@ -53,3 +52,16 @@ for i in range(m-1):
 	rec[i+1][1]=i2
 		
 print(rec)
+
+longestPath= []
+for index in rec: 
+	longestPath.insert(0,A[int(index[0])][int(index[1])])
+	
+print(longestPath)
+
+# volver función de hacer el string 
+longestPathString = ""
+for step in longestPath:
+	longestPathString += str(step) + " - "
+longestPathString = longestPathString[:-2]	
+print(longestPathString)
