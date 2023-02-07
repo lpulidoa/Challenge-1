@@ -1,9 +1,9 @@
 import numpy as np
 
-danceFloor = 'DanceFloor02.txt'
+file = 'DanceFloor02.txt'
 
-overView=np.loadtxt(danceFloor, skiprows=1, dtype=int)
-overView.astype(int)
+A=np.loadtxt(file, skiprows=1, dtype=int)
+A.astype(int)
 n=len(A)
 caminos=np.zeros((n,n))
 
@@ -31,3 +31,25 @@ print(caminos)
 print(m)
 x=np.where(caminos==m)
 print(x)
+
+
+i1=x[0][0]
+i2=x[1][0]
+m=int(m)
+rec=np.zeros((m,2))
+rec[0][0]=i1
+rec[0][1]=i2
+for i in range(m-1):
+	#print(caminos[i1][i2])
+	#print(caminos[i1][i2-1])
+	if(i2!=0):
+		if(np.absolute(int(A[i1][i2])-int(A[i1][i2-1]))==1 and int(caminos[i1][i2])-int(caminos[i1][i2-1])==1): #if(int(caminos[i1][i2])-int(caminos[i1][i2-1])==1):
+			i2=i2-1
+		else:
+			i1=i1-1
+	else:
+		i1=i1-1
+	rec[i+1][0]=i1
+	rec[i+1][1]=i2
+		
+print(rec)
