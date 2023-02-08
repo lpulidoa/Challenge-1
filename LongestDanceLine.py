@@ -54,11 +54,15 @@ def pathToString( path ):
 	return path_string
 
 
-example = 'DanceFloor01.txt'
+example = 'Ejemplo.txt'
 danceFloor = np.loadtxt(example, skiprows=1, dtype=int)
 
-path_lenght = int(findPaths(danceFloor).max())
-winner_path = pathToString( buildLongestPath( danceFloor , findPaths(danceFloor) ) )
+possible_paths = findPaths(danceFloor)
+path_lenght = int(possible_paths.max())
+print(np.where( possible_paths==path_lenght ))
+#winner_path = pathToString( buildLongestPath( danceFloor , possible_paths ) )
 
-print("Longest Endavans Line Dance is:", winner_path )
-print("Length of Path is:", path_lenght )
+#print("Longest Endavans Line Dance is:", winner_path )
+#print("Length of Path is:", path_lenght )
+
+
