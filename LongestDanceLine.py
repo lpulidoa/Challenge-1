@@ -1,39 +1,42 @@
 import numpy as np
 
 example = 'DanceFloor01.txt'
+danceFloor1=np.loadtxt(example, skiprows=1, dtype=int)
 
-danceFloor=np.loadtxt(example, skiprows=1, dtype=int)
-danceFloor.astype(int)
-n=len(danceFloor)
-caminos=np.zeros((n,n))
 
-# Volver función de calcular caminos
-m=0
-for i in range(n):
-	
-	for j in range(n):
-		n1=1
-		n2=1
-		if(i>0):
-			if(np.absolute(int(danceFloor[i][j])-int(danceFloor[i-1][j]))==1):
-				n1=caminos[i-1][j]+1
-		if(j>0):
-			if(np.absolute(int(danceFloor[i][j])-int(danceFloor[i][j-1]))==1):
-				n2=caminos[i][j-1]+1
-		if(n1>n2):
-				caminos[i][j]=n1
-		else:
-				caminos[i][j]=n2
-		if(caminos[i][j]>m):
-			m=caminos[i][j]
 
-print(danceFloor)						
-print(caminos)
-print(m)
-x=np.where(caminos==m)
-print(x)
+def findLongestPath( danceFloor ):
+    n = len(danceFloor)
+    paths = np.zeros((n,n))
 
-#def findLongestPath( danceFloor ):
+    longestLenght = 0
+    for i in range(n):
+        for j in range(n):
+            stepsUp = 1
+            stepsLeft = 1
+            if(i>0):
+                if(np.absolute(int(danceFloor[i][j])-int(danceFloor[i-1][j]))==1):
+                    stepsUp = paths[i-1][j]+1
+            if(j>0):
+                if(np.absolute(int(danceFloor[i][j])-int(danceFloor[i][j-1]))==1):
+                    stepsLeft = paths[i][j-1]+1
+            if(stepsUp>stepsLeft):
+                    paths[i][j] = stepsUp
+            else:
+                    paths[i][j] = stepsLeft
+            if(paths[i][j]>longestLenght):
+                longestLenght=paths[i][j]
+
+    return [int(longestLenght) , paths]
+    #print(danceFloor)						
+    #print(paths)
+    #print(longestLenght)
+    #x=np.where(paths==longestLenght)
+    #print(x)
+
+print(findLongestPath(danceFloor1))
+
+#def buildPath( lenght , paths , danceFloor ):
 	
 
 # volver función de reconstruir caminos 
