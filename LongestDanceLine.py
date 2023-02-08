@@ -4,73 +4,60 @@ example = 'DanceFloor01.txt'
 danceFloor1=np.loadtxt(example, skiprows=1, dtype=int)
 
 
-
-def findLongestPath( danceFloor ):
+def findPaths( danceFloor ):
     n = len(danceFloor)
     paths = np.zeros((n,n))
 
-    longestLenght = 0
-    for i in range(n):
-        for j in range(n):
+    for row in range(n):
+        for column in range(n):
             stepsUp = 1
             stepsLeft = 1
-            if(i>0):
-                if(np.absolute(int(danceFloor[i][j])-int(danceFloor[i-1][j]))==1):
-                    stepsUp = paths[i-1][j]+1
-            if(j>0):
-                if(np.absolute(int(danceFloor[i][j])-int(danceFloor[i][j-1]))==1):
-                    stepsLeft = paths[i][j-1]+1
+            if(row>0):
+                if(np.absolute(int(danceFloor[row][column])-int(danceFloor[row-1][column]))==1):
+                    stepsUp = paths[row-1][column]+1
+            if(column>0):
+                if(np.absolute(int(danceFloor[row][column])-int(danceFloor[row][column-1]))==1):
+                    stepsLeft = paths[row][column-1]+1
             if(stepsUp>stepsLeft):
-                    paths[i][j] = stepsUp
+                    paths[row][column] = stepsUp
             else:
-                    paths[i][j] = stepsLeft
-            if(paths[i][j]>longestLenght):
-                longestLenght=paths[i][j]
+                    paths[row][column] = stepsLeft
 
-    return [int(longestLenght) , paths]
-    #print(danceFloor)						
-    #print(paths)
-    #print(longestLenght)
-    #x=np.where(paths==longestLenght)
-    #print(x)
+    return paths 
 
-print(findLongestPath(danceFloor1))
 
-#def buildPath( lenght , paths , danceFloor ):
-	
+def buildLongestPath( paths , danceFloor ):
 
-# volver función de reconstruir caminos 
-i1=x[0][0]
-i2=x[1][0]
-m=int(m)
-rec=np.zeros((m,2))
-rec[0][0]=i1
-rec[0][1]=i2
-for i in range(m-1):
-	if(i2!=0):
-		if(np.absolute(int(danceFloor[i1][i2])-int(danceFloor[i1][i2-1]))==1 and int(caminos[i1][i2])-int(caminos[i1][i2-1])==1): 
-			i2=i2-1
-		else:
-			i1=i1-1
-	else:
-		i1=i1-1
-	rec[i+1][0]=i1
-	rec[i+1][1]=i2
-		
-print(rec)
+    lenght = int(paths.max())
+    index = np.where( paths==lenght )
+    i1 = index[0][0]
+    i2 = index[1][0]
+    rec=np.zeros(lenght)
+    rec[0] = danceFloor[i1][i2]
 
-longestPath= []
-for index in rec: 
-	longestPath.insert(0,danceFloor[int(index[0])][int(index[1])])
-	
-print(longestPath)
+    for i in range(lenght-1):
+        if(i2!=0):
+            if(np.absolute(int(danceFloor[i1][i2])-int(danceFloor[i1][i2-1]))==1 and int(paths[i1][i2])-int(paths[i1][i2-1])==1):
+                i2 = i2-1
+            else:
+                i1 = i1-1
+        else:
+            i1 = i1-1
+        
+        rec[i+1] = danceFloor[i1][i2]
 
-# volver función de hacer el string 
-def PathString(path):
+
+    longestPath= np.flip(rec)
+    longestPath = [int(steps) for steps in longestPath]
+    
+    return longestPath
+
+def PathString( path ):
 	pathString = ""
 	for step in path:
-		pathString += str(step) + "-"
+		pathString += str(int(step)) + "-"
 	pathString = pathString[:-1]	
 	return pathString
 
-print(PathString(longestPath))
+print( int(findPaths(danceFloor1).max()) )
+print( PathString(buildLongestPath( findPaths(danceFloor1), danceFloor1 ) ) )
