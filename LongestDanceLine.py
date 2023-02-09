@@ -46,6 +46,7 @@ def buildLongestPath( dance_floor , paths ):
     
     return longest_path
 
+
 def pathToString( path ):
 	path_string = ""
 	for step in path:
@@ -54,12 +55,14 @@ def pathToString( path ):
 	return path_string
 
 
-example = 'DanceFloor03.txt'
-danceFloor = np.loadtxt(example, skiprows=1, dtype=int)
+def winningPath( file ):
+     danceFloor = np.loadtxt( file , skiprows=1, dtype=int)
+     possible_paths = findPaths(danceFloor)
+     path_lenght = int(possible_paths.max())
+     winner_path = pathToString( buildLongestPath( danceFloor , possible_paths ) )
 
-possible_paths = findPaths(danceFloor)
-path_lenght = int(possible_paths.max())
-winner_path = pathToString( buildLongestPath( danceFloor , possible_paths ) )
+     print("Longest Endavans Line Dance is:", winner_path )
+     print("Length of Path is:", path_lenght )
 
-print("Longest Endavans Line Dance is:", winner_path )
-print("Length of Path is:", path_lenght )
+
+winningPath('DanceFloor01.txt')
